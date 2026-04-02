@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My To-Do List</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Background decorative blobs -->
+  <div class="bg-blob b1"></div>
+  <div class="bg-blob b2"></div>
+  <div class="bg-blob b3"></div>
+
+  <div class="app-wrapper">
+
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-icon">✦</div>
+      <h1>My To-Do List</h1>
+      <p class="subtitle">Stay organized. Stay ahead.</p>
+    </header>
+
+    <!-- Add Task Card -->
+    <div class="card add-card">
+      <h2 class="card-title">+ New Task</h2>
+      <div class="form-group">
+        <label for="taskTitle">Task Title <span class="req">*</span></label>
+        <input type="text" id="taskTitle" placeholder="e.g. Buy groceries…" maxlength="50" autocomplete="off" />
+        <div class="char-count"><span id="charCount">0</span>/50</div>
+      </div>
+      <div class="form-row">
+        <div class="form-group flex-1">
+          <label for="taskDesc">Description (optional)</label>
+          <textarea id="taskDesc" placeholder="Add more details…" rows="2"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="taskPriority">Priority</label>
+          <select id="taskPriority">
+            <option value="Low">🟢 Low</option>
+            <option value="Medium" selected>🟡 Medium</option>
+            <option value="High">🔴 High</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group flex-1">
+          <label for="taskDueDate">Due Date (optional)</label>
+          <input type="date" id="taskDueDate" />
+        </div>
+      </div>
+      <div id="formError" class="form-error hidden"></div>
+      <button id="addBtn" class="btn btn-primary">Add Task</button>
+    </div>
+
+    <!-- Controls: Search + Sort + Filter + Stats -->
+    <div class="controls-bar">
+      <div class="search-box">
+        <span class="search-icon">⌕</span>
+        <input type="text" id="searchInput" placeholder="Search tasks…" />
+      </div>
+      <div class="controls-right">
+        <select id="sortSelect" class="sort-select">
+          <option value="newest">Sort: Newest</option>
+          <option value="oldest">Sort: Oldest</option>
+          <option value="priority">Sort: Priority</option>
+          <option value="az">Sort: A–Z</option>
+        </select>
+        <button class="btn btn-export" id="exportBtn" title="Export to JSON">⬇ Export</button>
+      </div>
+    </div>
+
+    <div class="filter-row">
+      <div class="filter-btns">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="active">Active</button>
+        <button class="filter-btn" data-filter="completed">Completed</button>
+      </div>
+      <div class="stats-pill">
+        <span id="doneCount">0</span> done · <span id="totalCount">0</span> total
+      </div>
+    </div>
+
+    <!-- Task List -->
+    <div id="taskList" class="task-list">
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">📋</div>
+        <p>No tasks yet. Add one above!</p>
+      </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <h3 class="modal-title">Edit Task</h3>
+        <div class="form-group">
+          <label for="editTitle">Task Title</label>
+          <input type="text" id="editTitle" maxlength="50" />
+        </div>
+        <div class="form-group">
+          <label for="editDesc">Description</label>
+          <textarea id="editDesc" rows="2"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="editPriority">Priority</label>
+            <select id="editPriority">
+              <option value="Low">🟢 Low</option>
+              <option value="Medium">🟡 Medium</option>
+              <option value="High">🔴 High</option>
+            </select>
+          </div>
+          <div class="form-group flex-1">
+            <label for="editDueDate">Due Date</label>
+            <input type="date" id="editDueDate" />
+          </div>
+        </div>
+        <div id="editError" class="form-error hidden"></div>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" id="cancelEdit">Cancel</button>
+          <button class="btn btn-primary" id="saveEdit">Save Changes</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden"></div>
+
+    <!-- DB Status indicator -->
+    <div class="db-status" id="dbStatus" title="IndexedDB — data persists after refresh">
+      <span class="db-dot"></span> DB Connected
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
